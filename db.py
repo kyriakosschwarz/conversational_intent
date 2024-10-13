@@ -1,10 +1,9 @@
-# prompt: store the user input texts into a postgresql db. also be able to query the last five entries
-
-import streamlit as st
 import psycopg2
 import datetime
+import tomllib
 
-db_creds = st.secrets["db_credentials"]  # Replace "db_credentials" with your section name in secrets.toml
+with open(".streamlit/secrets.toml", "rb") as f:
+    db_creds = tomllib.load(f)["db_credentials"]
 
 # Database connection details
 DATABASE_URL = f"postgresql://{db_creds["user"]}:{db_creds["pass"]}@{db_creds["host"]}:{db_creds["port"]}/{db_creds["database"]}"  # Replace with your database details
@@ -16,7 +15,6 @@ def connect_to_db():
         print("Connected to DB")
         return conn
     except Exception as e:
-        #st.error(f"Error connecting to database: {e}")
         print(f"Error connecting to database: {e}")
         return None
 
@@ -39,7 +37,6 @@ def create_table(conn):
         cursor.close()
         print(f"Table {table_name} successfully created.")
     except Exception as e:
-        #st.error(f"Error creating table: {e}")
         print(f"Error creating table: {e}")
 
 
@@ -55,7 +52,8 @@ def store_input_and_output(conn, user_input, output_text, intent, probability):
         cursor.close()
         print(f"Successfully inserted {user_input}, {output_text}")
     except Exception as e:
-        st.error(f"Error storing input in database: {e}")
+        print(f"Error storing input in database: {e}")
+        return None
 
 # Function to retrieve the last five entries based on timestamp
 def get_last_entries(conn, nr_entries):
@@ -71,15 +69,12 @@ def get_last_entries(conn, nr_entries):
         cursor.close()
         return results
     except Exception as e:
-        st.error(f"Error retrieving entries from database: {e}")
-        return []
+        print(f"Error retrieving entries from database: {e}")
+        return None
 
 
 
 #conn = connect_to_db()
 #if conn:
 #    create_table(conn)  # Create table if it doesn't exist
-    #store_input_and_output(conn, "world", "accept")
-    #last_five = get_last_entries(conn, 5)
-    #print("Last five:", last_five)
- #   conn.close()
+#    conn.close()
