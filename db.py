@@ -74,7 +74,7 @@ def get_last_entries(conn, nr_entries):
 
 
 
-#conn = connect_to_db()
-#if conn:
-#    create_table(conn)  # Create table if it doesn't exist
-#    conn.close()
+conn = connect_to_db()
+if conn:
+    create_table(conn)  # Create table if it doesn't exist
+    conn.close()

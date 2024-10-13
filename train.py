@@ -12,6 +12,9 @@ from sklearn.utils import class_weight
 from sklearn.metrics import classification_report, f1_score
 import pickle
 
+nltk.download('punkt_tab')
+nltk.download('wordnet')
+
 # Load data
 df = pd.read_json('data/data.json')
 
