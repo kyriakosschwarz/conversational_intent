@@ -52,7 +52,7 @@ def lemmatize_text(text):
   return ' '.join(lemmatized_tokens)
 
 
-def predict_new_sentense(new_sentence):
+def predict_new_sentence(new_sentence):
 
     output_dict = {}
 
