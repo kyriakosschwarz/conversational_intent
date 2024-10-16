@@ -4,3 +4,7 @@ pandas
 scikit-learn
 nltk
 psycopg2-binary
+matplotlib
+seaborn
+wordcloud
+streamlit-option-menu

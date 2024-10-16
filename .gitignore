@@ -5,5 +5,5 @@ compose.yaml
 # Exclude entire folders
 data/
 artefacts/
-__pycache__/
+**/__pycache__/
 .streamlit/

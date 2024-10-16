@@ -37,18 +37,18 @@ def run_ml_inference(sanitized_input):
         st.error(f"An error occurred during machine learning inference: {e}")
         return "Error during ML inference. Please try again later."
 
-def display_last_entries():
+def display_last_entries(n):
     """
     Retrieves and displays the last five entries from the database in a Streamlit table.
     """
     conn = connect_to_db()
     if conn:
-        last_five = get_last_entries(conn, 5)
+        last_entries = get_last_entries(conn, n)
         st.write("Last Entries:")
-        if last_five:
-            df_last_five = pd.DataFrame(last_five['data'], columns=last_five['columns'])
+        if last_entries:
+            df_last_entries = pd.DataFrame(last_entries['data'], columns=last_entries['columns'])
             # Create a table to display the results
-            st.table(df_last_five)
+            st.table(df_last_entries)
         else:
             st.write("No entries found.")
         conn.close()
@@ -80,12 +80,38 @@ def handle_get_intent_button(user_input):
         sanitized_input = sanitize_user_input(user_input)
         if sanitized_input:
             result = run_ml_inference(sanitized_input)
-            st.write(format_ml_result(result))
+            st.success(format_ml_result(result))
             store_results_in_db(sanitized_input, result["intent_text"], result["max_class"], result["max_probability"])
+    else:
+        st.error("Please enter a user utterance.")
 
 def handle_last_entries_button():
     """
     Handles the "Show Last Entries" button click event.
     Displays the last five entries from the database.
     """
-    display_last_entries()     
+    display_last_entries(5)   
+
+def get_dashboard_data():
+    """
+    Retrieves the last 100 entries from the database in a dataframe.
+    """
+    conn = connect_to_db()
+    if conn:
+        last_entries = get_last_entries(conn, 100)
+        conn.close()
+        if last_entries:
+            df_last_entries = pd.DataFrame(last_entries['data'], columns=last_entries['columns'])
+            return df_last_entries
+        else:
+            return None        
+    return None
+
+def plot_probability_hist(data):
+    return plot_probability_histogram(data)
+
+def plot_avg_proba(data):
+    return plot_avg_probability_by_intent(data)
+
+def get_wordcloud(text, title):
+    return create_wordcloud(text, title)

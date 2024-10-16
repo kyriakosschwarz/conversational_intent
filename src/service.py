@@ -6,6 +6,7 @@ It includes functions for retrieving and storing data in the database, as well a
 
 from db import get_last_entries as db_get_last_entries, store_input_and_output as db_store_input_and_output, connect_to_db as db_connect_to_db
 from infer import predict_new_sentence as infer_predict_new_sentence
+from plots import plot_probability_histogram as plots_plot_probability_histogram, plot_avg_probability_by_intent as plots_plot_avg_probability_by_intent, create_wordcloud as plots_create_wordcloud
 
 def get_last_entries(connection, limit):
     """
@@ -74,3 +75,12 @@ def connect_to_db():
     except Exception as e:
         print(f"Error in connect_to_db: {e}")
         return None
+
+def plot_probability_histogram(data):
+    return plots_plot_probability_histogram(data)
+
+def plot_avg_probability_by_intent(data):
+    return plots_plot_avg_probability_by_intent(data)
+
+def create_wordcloud(text, title):
+    return plots_create_wordcloud(text, title)

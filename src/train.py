@@ -17,12 +17,14 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.utils import class_weight
 from sklearn.metrics import classification_report, f1_score
 import pickle
+from config_loader import ConfigLoader
 
 nltk.download('punkt_tab')
 nltk.download('wordnet')
 
 # Load data
-df = pd.read_json('data/data.json')
+data_file_path = ConfigLoader.get('paths.data_file')
+df = pd.read_json(data_file_path)
 
 def fix_contractions(text):
     """

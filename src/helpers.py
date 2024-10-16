@@ -59,5 +59,7 @@ def format_ml_result(result):
     output_text = f"{result["intent_text"]}"        
 
     if(result["intent_text"] == "Intent detected"):        
-        output_text = output_text + f": {result["max_class"]} ({result["max_probability"]})"
+        output_text = output_text + f""": {result["max_class"]}
+
+Probability: {result["max_probability"]}"""
     return(output_text)
