@@ -1,7 +1,7 @@
 """
-This module provides utility functions for text processing.
+This module provides service functions for handling database operations and intent prediction.
 
-It includes functions for cleaning, tokenizing, and analyzing text data.
+It includes functions for retrieving and storing data in the database, as well as predicting intents for new sentences.
 """
 
 from db import get_last_entries as db_get_last_entries, store_input_and_output as db_store_input_and_output, connect_to_db as db_connect_to_db

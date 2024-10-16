@@ -1,3 +1,9 @@
+"""
+Module: db.py
+
+Description: This module handles database operations for the intent classification system, including connection establishment, table creation, and data retrieval/storage.
+"""
+
 import psycopg2
 import datetime
 import tomllib
@@ -10,6 +16,12 @@ DATABASE_URL = f"postgresql://{db_creds["user"]}:{db_creds["pass"]}@{db_creds["h
 
 # Function to connect to the database
 def connect_to_db():
+    """
+    Establishes a connection to the PostgreSQL database.
+
+    Returns:
+        psycopg2.connection: A connection object if successful, None otherwise.
+    """
     try:
         conn = psycopg2.connect(DATABASE_URL)
         print("Connected to DB")
@@ -20,6 +32,12 @@ def connect_to_db():
 
 # Function to create the user_inputs table if it doesn't exist
 def create_table(conn):
+    """
+    Creates the 'user_inputs' table in the database if it doesn't already exist.
+
+    Args:
+        conn (psycopg2.connection): The database connection object.
+    """
     try:
         table_name = "user_inputs"
         cursor = conn.cursor()
@@ -42,6 +60,16 @@ def create_table(conn):
 
 # Function to store user input and output in the database
 def store_input_and_output(conn, user_input, output_text, intent, probability):
+    """
+    Stores the user input, model output, predicted intent, and probability in the database.
+
+    Args:
+        conn (psycopg2.connection): The database connection object.
+        user_input (str): The original input text from the user.
+        output_text (str): The output text produced by the model.
+        intent (str): The predicted intent.
+        probability (float): The probability of the predicted intent.
+    """
     try:
         cursor = conn.cursor()
         cursor.execute("""
@@ -57,6 +85,16 @@ def store_input_and_output(conn, user_input, output_text, intent, probability):
 
 # Function to retrieve the last five entries based on timestamp
 def get_last_entries(conn, nr_entries):
+    """
+    Retrieves the last 'nr_entries' entries from the database, ordered by timestamp.
+
+    Args:
+        conn (psycopg2.connection): The database connection object.
+        nr_entries (int): The number of entries to retrieve.
+
+    Returns:
+        dict: A dictionary containing the retrieved data and column names.
+    """
     try:
         cursor = conn.cursor()
         cursor.execute(f"""

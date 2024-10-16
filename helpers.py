@@ -1,3 +1,9 @@
+"""
+Module: helpers.py
+
+Description: This module provides utility functions for input sanitization and formatting of machine learning results.
+"""
+
 import streamlit as st
 import re
 
@@ -12,7 +18,6 @@ def sanitize_user_input(user_input):
     Returns:
         A sanitized version of the input, or None if it's invalid.
     """
-
     # Remove leading/trailing whitespace
     user_input = user_input.strip()
 
@@ -42,6 +47,15 @@ def sanitize_user_input(user_input):
 
 
 def format_ml_result(result):
+    """
+    Formats the machine learning result into a human-readable string.
+
+    Args:
+        result: A dictionary containing the machine learning inference results.
+
+    Returns:
+        A formatted string representing the inference result.
+    """
     output_text = f"{result["intent_text"]}"        
 
     if(result["intent_text"] == "Intent detected"):        

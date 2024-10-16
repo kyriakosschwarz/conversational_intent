@@ -1,3 +1,9 @@
+"""
+Module: app.py
+
+Description: This module serves as the main entry point for the Streamlit-based intent classification application. It sets up the user interface and handles user interactions.
+"""
+
 import streamlit as st
 from business import *
 

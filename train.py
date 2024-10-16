@@ -1,3 +1,9 @@
+"""
+Module: train.py
+
+Description: This module handles the training of the intent classification model, including data preprocessing, model selection, and evaluation.
+"""
+
 import pandas as pd
 import contractions
 import string
@@ -18,25 +24,57 @@ nltk.download('wordnet')
 # Load data
 df = pd.read_json('data/data.json')
 
-# Function to fix contractions in a text string
 def fix_contractions(text):
+    """
+    Expands contractions in the given text.
+
+    Args:
+        text: The input text containing contractions.
+
+    Returns:
+        The text with expanded contractions.
+    """
     return contractions.fix(text)
 
-# Function to remove punctuation from a text string
 def remove_punctuation(text):
+    """
+    Removes all punctuation from the given text.
+
+    Args:
+        text: The input text containing punctuation.
+
+    Returns:
+        The text with all punctuation removed.
+    """
     return text.translate(str.maketrans('', '', string.punctuation))
 
 # Initialize the WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 
-# Function to lemmatize a text string
 def lemmatize_text(text):
+    """
+    Lemmatizes each word in the given text.
+
+    Args:
+        text: The input text to be lemmatized.
+
+    Returns:
+        The text with all words lemmatized.
+    """
     tokens = nltk.word_tokenize(text)
     lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
     return ' '.join(lemmatized_tokens)
 
-# Preprocessing pipeline
 def preprocess_text(text):
+    """
+    Applies a series of preprocessing steps to the input text.
+
+    Args:
+        text: The input text to be preprocessed.
+
+    Returns:
+        The preprocessed text.
+    """
     text = text.lower()  # Convert to lowercase
     text = fix_contractions(text)
     text = remove_punctuation(text)

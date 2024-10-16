@@ -1,3 +1,9 @@
+"""
+Module: business.py
+
+Description: This module contains the business logic for the intent classification system, including ML inference, database interactions, and result handling.
+"""
+
 import pandas as pd
 from helpers import *
 from service import *
@@ -5,13 +11,12 @@ from service import *
 def run_ml_inference(sanitized_input):
     """
     Runs machine learning inference on the sanitized user input.
-    This is a placeholder function; replace with your actual ML inference logic.
 
     Args:
         sanitized_input: The sanitized user input string.
 
     Returns:
-        A string representing the ML model's output or an error message.
+        A dictionary containing the ML model's output or an error message.
     """
     try:
         model_output = predict_new_sentence(sanitized_input)
@@ -33,6 +38,9 @@ def run_ml_inference(sanitized_input):
         return "Error during ML inference. Please try again later."
 
 def display_last_entries():
+    """
+    Retrieves and displays the last five entries from the database in a Streamlit table.
+    """
     conn = connect_to_db()
     if conn:
         last_five = get_last_entries(conn, 5)
@@ -46,12 +54,28 @@ def display_last_entries():
         conn.close()
 
 def store_results_in_db(user_input, output_text, intent, probability):
+    """
+    Stores the inference results in the database.
+
+    Args:
+        user_input (str): The original user input.
+        output_text (str): The output text from the ML model.
+        intent (str): The predicted intent.
+        probability (float): The probability of the predicted intent.
+    """
     conn = connect_to_db()
     if conn:
         store_input_and_output(conn, user_input, output_text, intent, probability)
         conn.close()  
 
 def handle_get_intent_button(user_input):
+    """
+    Handles the "Get intent" button click event.
+    Sanitizes the input, runs ML inference, displays the result, and stores it in the database.
+
+    Args:
+        user_input (str): The user's input text.
+    """
     if user_input:
         sanitized_input = sanitize_user_input(user_input)
         if sanitized_input:
@@ -60,4 +84,8 @@ def handle_get_intent_button(user_input):
             store_results_in_db(sanitized_input, result["intent_text"], result["max_class"], result["max_probability"])
 
 def handle_last_entries_button():
+    """
+    Handles the "Show Last Entries" button click event.
+    Displays the last five entries from the database.
+    """
     display_last_entries()     

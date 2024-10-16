@@ -1,3 +1,9 @@
+"""
+Module: infer.py
+
+Description: This module handles the loading of machine learning resources and provides functions for text preprocessing and intent prediction.
+"""
+
 import pandas as pd
 import contractions
 import string
@@ -12,6 +18,12 @@ from sklearn import preprocessing
 
 
 def load_resources():
+    """
+    Loads the trained model, TfidfVectorizer, and LabelEncoder from pickle files.
+
+    Returns:
+        A tuple containing the loaded model, TfidfVectorizer, and LabelEncoder.
+    """
     # Load the trained model
     with open('artefacts/trained_model.pickle', 'rb') as f:
       model = pickle.load(f)
@@ -32,28 +44,72 @@ print("resources loaded")
 
 # Preprocessing pipeline (same as before)
 def preprocess_text(text):
-  text = text.lower()
-  text = fix_contractions(text)
-  text = remove_punctuation(text)
-  text = lemmatize_text(text)
-  return text
+    """
+    Applies a series of preprocessing steps to the input text.
+
+    Args:
+        text: The input text to be preprocessed.
+
+    Returns:
+        The preprocessed text.
+    """
+    text = text.lower()
+    text = fix_contractions(text)
+    text = remove_punctuation(text)
+    text = lemmatize_text(text)
+    return text
 
 def fix_contractions(text):
-  return contractions.fix(text)
+    """
+    Expands contractions in the given text.
+
+    Args:
+        text: The input text containing contractions.
+
+    Returns:
+        The text with expanded contractions.
+    """
+    return contractions.fix(text)
 
 def remove_punctuation(text):
-  return text.translate(str.maketrans('', '', string.punctuation))
+    """
+    Removes all punctuation from the given text.
+
+    Args:
+        text: The input text containing punctuation.
+
+    Returns:
+        The text with all punctuation removed.
+    """
+    return text.translate(str.maketrans('', '', string.punctuation))
 
 lemmatizer = WordNetLemmatizer()
 
 def lemmatize_text(text):
-  tokens = nltk.word_tokenize(text)
-  lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
-  return ' '.join(lemmatized_tokens)
+    """
+    Lemmatizes each word in the given text.
+
+    Args:
+        text: The input text to be lemmatized.
+
+    Returns:
+        The text with all words lemmatized.
+    """
+    tokens = nltk.word_tokenize(text)
+    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
+    return ' '.join(lemmatized_tokens)
 
 
 def predict_new_sentence(new_sentence):
+    """
+    Predicts the intent probabilities for a new input sentence.
 
+    Args:
+        new_sentence: The input sentence to predict intent for.
+
+    Returns:
+        A dictionary containing intent probabilities.
+    """
     output_dict = {}
 
     # Preprocess the new sentence
@@ -79,4 +135,3 @@ def predict_new_sentence(new_sentence):
     return output_dict
 
 #print(predict_new_sentense("Not this time."))
-
