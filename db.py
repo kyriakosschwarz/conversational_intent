@@ -66,8 +66,10 @@ def get_last_entries(conn, nr_entries):
             LIMIT {nr_entries}
         """)
         results = cursor.fetchall()
+        # Get the column names
+        column_names = [desc[0] for desc in cursor.description]
         cursor.close()
-        return results
+        return {'data': results, 'columns': column_names}
     except Exception as e:
         print(f"Error retrieving entries from database: {e}")
         return None

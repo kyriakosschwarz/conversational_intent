@@ -1,8 +1,9 @@
 # Exclude specific files
 Dockerfile
-.streamlit/secrets.toml
+compose.yaml
 
 # Exclude entire folders
 data/
 artefacts/
 __pycache__/
+.streamlit/

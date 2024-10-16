@@ -4,6 +4,14 @@ from business import *
 
 st.title("Intent Classification")
 
+# App description - Explain functionalities in an expander box
+with st.expander('About this app'):
+  st.markdown('**What can this app do?**')
+  st.info('This app can predict an intent based on an input utterance. Furthermore, the last five predictions can be displayed in form of a table.')
+  st.markdown('**How to use the app?**')
+  st.warning('To engage with the app, 1. Enter a new text into the text box and then press the "Get intent" button. 2. Display the last five predictions by pressing the "Show Last Entries" button.')
+
+
 user_input = st.text_input("Enter user utterance:")
 
 # Button to retrieve inference

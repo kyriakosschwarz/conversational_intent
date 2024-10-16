@@ -1,3 +1,4 @@
+import pandas as pd
 from helpers import *
 from service import *
 
@@ -37,8 +38,9 @@ def display_last_entries():
         last_five = get_last_entries(conn, 5)
         st.write("Last Entries:")
         if last_five:
+            df_last_five = pd.DataFrame(last_five['data'], columns=last_five['columns'])
             # Create a table to display the results
-            st.table(last_five)
+            st.table(df_last_five)
         else:
             st.write("No entries found.")
         conn.close()

@@ -1,3 +1,9 @@
+"""
+This module provides utility functions for text processing.
+
+It includes functions for cleaning, tokenizing, and analyzing text data.
+"""
+
 from db import get_last_entries as db_get_last_entries, store_input_and_output as db_store_input_and_output, connect_to_db as db_connect_to_db
 from infer import predict_new_sentence as infer_predict_new_sentence
 
@@ -68,4 +74,3 @@ def connect_to_db():
     except Exception as e:
         print(f"Error in connect_to_db: {e}")
         return None
-
