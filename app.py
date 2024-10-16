@@ -8,7 +8,7 @@ import streamlit as st
 from business import *
 
 
-st.title("Intent Classification")
+st.title("Intent Prediction")
 
 # App description - Explain functionalities in an expander box
 with st.expander('About this app'):
