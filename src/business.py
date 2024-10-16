@@ -80,6 +80,7 @@ def handle_get_intent_button(user_input):
         sanitized_input = sanitize_user_input(user_input)
         if sanitized_input:
             result = run_ml_inference(sanitized_input)
+            st.info(result)
             st.success(format_ml_result(result))
             store_results_in_db(sanitized_input, result["intent_text"], result["max_class"], result["max_probability"])
     else:
@@ -106,6 +107,15 @@ def get_dashboard_data():
         else:
             return None        
     return None
+
+def create_initial_table():
+    conn = connect_to_db()
+    if conn:
+        create_table(conn)  # Create table if it doesn't exist
+        conn.close()
+        st.success("Initial table created (if not already existed)")
+    else:
+        st.error("Initial table could not be created")
 
 def plot_probability_hist(data):
     return plot_probability_histogram(data)

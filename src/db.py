@@ -6,13 +6,32 @@ Description: This module handles database operations for the intent classificati
 
 import psycopg2
 import datetime
-import tomllib
+#import tomllib
+import os
 
-with open(".streamlit/secrets.toml", "rb") as f:
-    db_creds = tomllib.load(f)["db_credentials"]
+#with open(".streamlit/secrets.toml", "rb") as f:
+#    db_creds = tomllib.load(f)["db_credentials"]
+
+# Access environment variables
+db_host = os.environ.get('DB_HOST')
+db_port = os.environ.get('DB_PORT')
+db_name = os.environ.get('DB_NAME')
+db_user_file = os.environ.get('DB_USER_FILE')
+db_password_file = os.environ.get('DB_PASSWORD_FILE')
+
+# Function to read secrets from files
+def read_secret(file_path):
+    with open(file_path, 'r') as file:
+        return file.read().strip()
+
+# Read username and password from secret files
+db_user = read_secret(db_user_file)
+db_password = read_secret(db_password_file)
 
 # Database connection details
-DATABASE_URL = f"postgresql://{db_creds["user"]}:{db_creds["pass"]}@{db_creds["host"]}:{db_creds["port"]}/{db_creds["database"]}"  # Replace with your database details
+#DATABASE_URL = f"postgresql://{db_creds["user"]}:{db_creds["pass"]}@{db_creds["host"]}:{db_creds["port"]}/{db_creds["database"]}"  # Replace with your database details
+DATABASE_URL = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"  # Replace with your database details
+
 
 # Function to connect to the database
 def connect_to_db():
@@ -111,10 +130,3 @@ def get_last_entries(conn, nr_entries):
     except Exception as e:
         print(f"Error retrieving entries from database: {e}")
         return None
-
-
-
-conn = connect_to_db()
-if conn:
-    create_table(conn)  # Create table if it doesn't exist
-    conn.close()

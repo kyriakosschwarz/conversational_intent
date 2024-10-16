@@ -13,6 +13,23 @@ from nltk.stem import WordNetLemmatizer
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import preprocessing
+from config_loader import ConfigLoader
+
+nltk_data_dir = ConfigLoader.get('paths.nltk_data_dir')
+
+# Tell NLTK where to look for data
+nltk.data.path.append(nltk_data_dir)
+
+# Function to download resource if not available
+def download_nltk_resource(resource_name):
+    try:
+        nltk.data.find(resource_name)
+    except LookupError:
+        nltk.download(resource_name, download_dir=nltk_data_dir)
+
+# Download 'punkt' and 'wordnet' if not available locally
+download_nltk_resource('tokenizers/punkt_tab')
+download_nltk_resource('corpora/wordnet')
 
 # Assuming you have the necessary files 'trained_model.pickle', 'tfidf_vectorizer.pickle', and 'label_encoder.pickle'
 
@@ -24,22 +41,26 @@ def load_resources():
     Returns:
         A tuple containing the loaded model, TfidfVectorizer, and LabelEncoder.
     """
+
+    trained_model_path = ConfigLoader.get('paths.trained_model_file')
+    tfidf_vectorizer_path = ConfigLoader.get('paths.tfidf_vectorizer_file')
+    label_encoder_path = ConfigLoader.get('paths.label_encoder_file')
+
     # Load the trained model
-    with open('artefacts/trained_model.pickle', 'rb') as f:
+    with open(trained_model_path, 'rb') as f:
       model = pickle.load(f)
 
     # Load the TfidfVectorizer
-    with open('artefacts/tfidf_vectorizer.pickle', 'rb') as f:
+    with open(tfidf_vectorizer_path, 'rb') as f:
       tfidf_vectorizer = pickle.load(f)
 
     # Load the LabelEncoder
-    with open('artefacts/label_encoder.pickle', 'rb') as f:
+    with open(label_encoder_path, 'rb') as f:
       le = pickle.load(f)
 
     return model, tfidf_vectorizer, le
 
 model, tfidf_vectorizer, le = load_resources()
-print("resources loaded")
 
 
 # Preprocessing pipeline (same as before)
@@ -133,5 +154,3 @@ def predict_new_sentence(new_sentence):
       output_dict[class_name_original] = round(probability, 3).item()
 
     return output_dict
-
-#print(predict_new_sentense("Not this time."))

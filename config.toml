@@ -1,3 +1,6 @@
 [paths]
-data_file = "./data/data.json"   # Path to the data file
-
+data_file = "./data/data.json"
+nltk_data_dir = "./data/nltk_data/"
+trained_model_file = "./artefacts/trained_model.pickle"
+tfidf_vectorizer_file = "./artefacts/tfidf_vectorizer.pickle"
+label_encoder_file = "./artefacts/label_encoder.pickle"

@@ -12,6 +12,9 @@ with st.sidebar:
     )
 
 if app_mode == "About":
+
+    create_initial_table()
+
     st.title("About this app")
     st.markdown('**What can this app do?**')
     st.info('This app can predict an intent based on an input utterance. Furthermore, the last five predictions can be displayed in form of a table.')
