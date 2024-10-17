@@ -1,6 +1,4 @@
 # Exclude specific files
-Dockerfile
-compose.yaml
 
 # Exclude entire folders
 data/
