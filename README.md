@@ -18,7 +18,7 @@ This repository contains a Conversational Assistant as a Dockerized Streamlit ap
 2. Create the `secrets` directory and add your database credentials:
    ```
    mkdir -p secrets
-   echo "your_db_username" > secrets/db_user.txt
+   echo "your_db_username" > secrets/db_username.txt
    echo "your_db_password" > secrets/db_password.txt
    ```
 
