@@ -80,7 +80,6 @@ def handle_get_intent_button(user_input):
         sanitized_input = sanitize_user_input(user_input)
         if sanitized_input:
             result = run_ml_inference(sanitized_input)
-            st.info(result)
             st.success(format_ml_result(result))
             store_results_in_db(sanitized_input, result["intent_text"], result["max_class"], result["max_probability"])
     else:
@@ -109,19 +108,52 @@ def get_dashboard_data():
     return None
 
 def create_initial_table():
+    """
+    Create the initial table in the database.
+
+    This function attempts to connect to the database, create a table if it doesn't exist,
+    and then close the connection. If the connection fails, it displays an error message.
+    """
     conn = connect_to_db()
     if conn:
         create_table(conn)  # Create table if it doesn't exist
         conn.close()
-        st.success("Initial table created (if not already existed)")
     else:
         st.error("Initial table could not be created")
 
 def plot_probability_hist(data):
+    """
+    Plot a probability histogram.
+
+    Args:
+        data: The data to be plotted.
+
+    Returns:
+        A probability histogram plot.
+    """
     return plot_probability_histogram(data)
 
 def plot_avg_proba(data):
+    """
+    Plot the average probability by intent.
+
+    Args:
+        data: The data to be plotted.
+
+    Returns:
+        A plot of average probability by intent.
+    """
     return plot_avg_probability_by_intent(data)
 
 def get_wordcloud(text, title):
+    """
+    Generate a word cloud from the given text.
+
+    Args:
+        text (str): The text to generate the word cloud from.
+        title (str): The title for the word cloud.
+
+    Returns:
+        A word cloud visualization.
+    """
     return create_wordcloud(text, title)

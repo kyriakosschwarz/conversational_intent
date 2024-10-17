@@ -17,9 +17,21 @@ if app_mode == "About":
 
     st.title("About this app")
     st.markdown('**What can this app do?**')
-    st.info('This app can predict an intent based on an input utterance. Furthermore, the last five predictions can be displayed in form of a table.')
+
+    app_description = """
+    This app is a conversational assistant. Here you can:
+    1. Get an intent based on an user utterance.
+    2. Display the history of predictions.
+    3. View a dashboard with statistics over the predictions.
+    """
+    st.info(app_description)
+    
     st.markdown('**How to use the app?**')
-    st.warning('To engage with the app, 1. Enter a new text into the text box and then press the "Get intent" button. 2. Display the last five predictions by pressing the "Show Last Entries" button.')
+
+    app_usage = """
+    To engage with the app use the navigation menu on the left.
+    """
+    st.warning(app_usage)
 
 
 elif app_mode == "Intent Prediction":

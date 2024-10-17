@@ -4,7 +4,7 @@ This repository contains a Conversational Assistant as a Dockerized Streamlit ap
 
 ## Prerequisites
 
-- Docker
+- Docker Engine
 - Docker Compose
 
 ## Running the App
@@ -17,23 +17,24 @@ This repository contains a Conversational Assistant as a Dockerized Streamlit ap
 
 2. Create the `secrets` directory and add your database credentials:
    ```
-   mkdir secrets
+   mkdir -p secrets
    echo "your_db_username" > secrets/db_user.txt
    echo "your_db_password" > secrets/db_password.txt
    ```
 
-3. Build and run the Docker containers:
+3. Build the Docker containers:
    ```
-   docker-compose up --build
+   docker compose build
    ```
 
-4. Open your browser and navigate to `http://localhost:8501` to view the Streamlit app.
+4. Run the Docker containers:
+   ```
+   docker compose up
+   ```
+
+5. Open your browser and navigate to `http://localhost:8501` to view the Streamlit app.
 
 ## Stopping the App
 
-To stop the app, press `Ctrl+C` in the terminal where you ran `docker-compose up`, or run:
-```
-docker-compose down
-```
-
+To stop the app, press `Ctrl+C` in the terminal where you ran `docker compose up`.
 This will stop and remove the containers, but preserve the database volume.

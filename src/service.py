@@ -77,13 +77,59 @@ def connect_to_db():
         return None
 
 def create_table(conn):
+    """
+    Create a table in the database.
+
+    This function calls the db_create_table function to create a table
+    in the database using the provided connection.
+
+    Args:
+        conn: The database connection object.
+    """
     db_create_table(conn)
 
 def plot_probability_histogram(data):
+    """
+    Plot a probability histogram.
+
+    This function calls the plots_plot_probability_histogram function
+    to create and return a probability histogram.
+
+    Args:
+        data: The data to be plotted.
+
+    Returns:
+        A probability histogram plot.
+    """
     return plots_plot_probability_histogram(data)
 
 def plot_avg_probability_by_intent(data):
+    """
+    Plot the average probability by intent.
+
+    This function calls the plots_plot_avg_probability_by_intent function
+    to create and return a plot of average probability by intent.
+
+    Args:
+        data: The data to be plotted.
+
+    Returns:
+        A plot of average probability by intent.
+    """
     return plots_plot_avg_probability_by_intent(data)
 
 def create_wordcloud(text, title):
+    """
+    Generate a word cloud from the given text.
+
+    This function calls the plots_create_wordcloud function
+    to create and return a word cloud visualization.
+
+    Args:
+        text (str): The text to generate the word cloud from.
+        title (str): The title for the word cloud.
+
+    Returns:
+        A word cloud visualization.
+    """
     return plots_create_wordcloud(text, title)
