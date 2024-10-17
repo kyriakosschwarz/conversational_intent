@@ -7,3 +7,4 @@ data/
 artefacts/
 **/__pycache__/
 .streamlit/
+secrets/
